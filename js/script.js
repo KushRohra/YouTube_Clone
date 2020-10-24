@@ -56,6 +56,40 @@ function search() {
                     //Display results
                     $('#results').append(output);
                 });
+
+                var buttons =  getButtons(prevPageToken, nextPageToken);
+
+                // Display Buttons
+                $('#buttons').append(buttons);
             } 
     );
+}
+
+function getOutput(item) {
+    var videoId = item.id.videoId;
+    var title = item.snippet.title;
+    var description = item.snippet.description;
+    var thumb = item.snippet.thumbnails.high.url;
+    var channelTitle = item.snippet.channelTitle;
+    var videoDate = item.snippet.publishedAt;
+
+    //Build Output String
+    var output = `
+                    <li>
+                        <div class="list-left">
+                            <img src="` + thumb + `">
+                        </div>
+                        <div class="list-right">
+                            <h2>` + title + `</h2>
+                            <small>By: <span class="cTitle">` + channelTitle + `</span> on ` + videoDate + `</small>
+                            <p>` + description + `</p>
+                        </div>
+                    </li>
+                    <div class="clearfix"></div>
+                 `;
+    return output;
+}
+
+function getButtons(prevPageToken, nextPageToken) {
+    
 }
