@@ -127,3 +127,17 @@ footer {
 .cTitle {
     color: #dd2826;
 }
+
+.button-container {
+    margin-top: 25px;
+}
+
+.paging-button {
+    background: #f4f4f4;
+    padding: 8px 13px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin: 10px;
+    color: #333;
+    cursor: pointer;
+}

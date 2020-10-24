@@ -65,6 +65,88 @@ function search() {
     );
 }
 
+// Next Page Function 
+function nextPage() {
+
+    var token = $('#next-button').data('token');
+    var q = $('#next-button').data('query');
+
+    // Clear Results which are already displayed right now
+    $('#results').html('');
+    $('#buttons').html('');
+
+    // Get input from Form 
+    q = $('#query').val();
+
+    // Run Get Request on API
+    $.get(
+        "https://www.googleapis.com/youtube/v3/search",{
+            part: 'snippet, id',
+            q: q,
+            pageToken: token,
+            type: 'video, playlist',
+            key: 'AIzaSyAwh7WSYc6fzE_NhXM6jEfbSPpoEeH5eAU' },
+            function(data) {
+                var nextPageToken = data.nextPageToken;
+                var prevPageToken = data.prevPageToken;
+
+                $.each(data.items, function(i, item) {
+                    // Get Output
+                    var output = getOutput(item);
+
+                    //Display results
+                    $('#results').append(output);
+                });
+
+                var buttons =  getButtons(prevPageToken, nextPageToken);
+
+                // Display Buttons
+                $('#buttons').append(buttons);
+            } 
+    );
+}
+
+// Prev Page Function 
+function prevPage() {
+
+    var token = $('#prev-button').data('token');
+    var q = $('#prev-button').data('query');
+
+    // Clear Results which are already displayed right now
+    $('#results').html('');
+    $('#buttons').html('');
+
+    // Get input from Form 
+    q = $('#query').val();
+
+    // Run Get Request on API
+    $.get(
+        "https://www.googleapis.com/youtube/v3/search",{
+            part: 'snippet, id',
+            q: q,
+            pageToken: token,
+            type: 'video, playlist',
+            key: 'AIzaSyAwh7WSYc6fzE_NhXM6jEfbSPpoEeH5eAU' },
+            function(data) {
+                var nextPageToken = data.nextPageToken;
+                var prevPageToken = data.prevPageToken;
+
+                $.each(data.items, function(i, item) {
+                    // Get Output
+                    var output = getOutput(item);
+
+                    //Display results
+                    $('#results').append(output);
+                });
+
+                var buttons =  getButtons(prevPageToken, nextPageToken);
+
+                // Display Buttons
+                $('#buttons').append(buttons);
+            } 
+    );
+}
+
 //Build the Output
 function getOutput(item) {
     var videoId = item.id.videoId;
@@ -81,7 +163,7 @@ function getOutput(item) {
                             <img src="` + thumb + `">
                         </div>
                         <div class="list-right">
-                            <h2>` + title + `</h2>
+                            <h2><a data-fancybox="gallery" href="https://www.youtube.com/embed/`+videoId+`">` + title + `</a></h2>
                             <small>By: <span class="cTitle">` + channelTitle + `</span> on ` + videoDate + `</small>
                             <p>` + description + `</p>
                         </div>
